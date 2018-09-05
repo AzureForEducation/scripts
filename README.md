@@ -1,7 +1,8 @@
 # Scripts
 
-A set of scripts (mostly in shell) which would useful for customers, partners and even for customers.
+A set of scripts (mostly in shell but some in Powershell) which would useful for customers, partners and even for customers.
 
-Scripts currently available:
+Scripts currently available into:
 
-* **Azure Storage Accounts**: Group of shell scripts designed to manipulate operations related to Storage Accounts.
+* **scripts/shell/storage-account**: Group of shell scripts designed to manipulate operations related to Storage Accounts.
+* **scripts/powershell/api-management**: Group of powershell scripts built to interact with API Management service.
