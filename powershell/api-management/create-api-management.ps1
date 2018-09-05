@@ -54,9 +54,86 @@ function Login
     }
 }
 
-function Main
+function VerifyExistanceOfResourceGroup($resourceGroup)
 {
-    Login
+    Try
+    {
+        $rgReturned = Get-AzureRmResource -ResourceName $resourceGroup
+    }
+    Catch
+    {
+        if([string]::IsNullOrEmpty($rgReturned))
+        {
+            return $false
+        }
+        else
+        {
+            return $true
+        }
+    }
 }
 
+function CreateResourceGroup($resourceGroup)
+{
+    # Requesting additional information
+    $location = Read-Host "Please, inform the Azure region for this Resource Group"
+
+    if([string]::IsNullOrEmpty($location) -or [string]::IsNullOrEmpty($resourceGroup))
+    {
+        return $false
+    }
+    else
+    {
+        try 
+        {
+            New-AzureRmResourceGroup -Name $resourceGroup -Location $location
+            return $true
+        }
+        catch 
+        { 
+            return $false
+        }
+    }
+}
+
+function Main
+{
+    # Step 1 - Veryfing and logging user
+    Login
+
+    # Step 2 - Verify if a resource group exists. If not, creates a new one.
+    $resourceGroup = Read-Host -Prompt "Resource Group name (where Api Management will seat)"
+    $resourceGroupExists = VerifyExistanceOfResourceGroup($resourceGroup)
+
+    if($resourceGroupExists)
+    {
+        Write-Host "Creating a new API Management service into" $resourceGroup"..."
+        CreateApiManagement($resourceGroup)
+        Write-Host "Done."
+    }
+    else
+    {
+        Write-Host "Hang on. First, we need to create a new Resource Group..."
+        $rgCreationStatus = CreateResourceGroup($resourceGroup)
+
+        if($rgCreationStatus)
+        {
+            Write-Host "Done. Now, creating the API Management..."
+
+            $apimCreationStatus = CreateApiManagement($resourceGroup)
+
+            if($apimCreationStatus)
+            {
+                Write-Host "Done."
+            }
+        }
+        else
+        {
+            Write-Host "Ops! There was an error when we've tried to create the new Resource Group."
+            Write-Host "Program will close."
+        }
+    }
+}
+
+# Calling the main function
 Main
