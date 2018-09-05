@@ -1,6 +1,6 @@
 # Scripts
 
-A set of scripts (mostly in shell but some in Powershell) which would useful for customers, partners and even for customers.
+A set of scripts (mostly in shell but some in Powershell) which would useful for customers, MS partners, developers, and cloud professionals seeking to figure out ways to automatize deployment of resources through scripts.
 
 Scripts currently available into:
 
