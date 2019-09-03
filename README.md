@@ -7,3 +7,4 @@ Scripts are available under the following directory structure:
 * **scripts/shell/storage-account**: Group of shell scripts designed to manipulate operations related to Storage Accounts.
 * **scripts/powershell/api-management**: Group of Powershell scripts built to interact with API Management service.
 * **scripts/powershell/azure-graph**: Group of Powershell Core scripts built to interact with Azure Resources on top of Azure Graph.
+* **scripts/terraform**: Group of automation scripts in Terraform.
