@@ -1,0 +1,16 @@
+$sub="your subscription"
+
+# Get logged into Azure
+az login
+
+# Set current account context
+az account set --subscription $sub
+
+# Exclude the following resource groups from deletion
+$excludedGroups = @("rg1", "rg2", "rgn")
+
+# Retrieve a list of all current resource groups
+$groups = az group list --query "[].name" --output tsv
+
+# Delete resource groups
+$groups | ForEach-Object { if ($_ -notin $excludedGroups) { az group delete -n $_ --yes --no-wait } }
